@@ -23,23 +23,34 @@ Check out [W3Schools' SQL Reference](http://www.w3schools.com/sql/sql_syntax.asp
 ```SQL
 /* Add your answer below */
 
+SELECT * FROM media_types;
+
 ```
 
 2. Find the least expensive Track that has the Genre "Electronica/Dance".
 ```SQL
 /* Add your answer below */
 
+SELECT * FROM tracks 
+WHERE genre_id=15
+ORDER BY unit_price DESC;
+
 ```
 
 3. Find the all the Artists whose names start with A.
 ```SQL
 /* Add your answer below */
+SELECT * FROM tracks
+WHERE name LIKE 'A%';
 
 ```
 
 4. Find all the Tracks that belong to the first Playlist.
 ```SQL
 /* Add your answer below */
+
+SELECT * FROM tracks 
+WHERE playlist_id=1
 
 ```
 
@@ -139,24 +150,48 @@ Of course, these can be done as one or more steps.
 ```ruby
 # Enter your answer below
 
+Genre.find_each do |x|
+	x.name 
+	x.id
+end
+#To find id of each genre#
+
+Track.where(genre_id:17).count
+
+
 ```
 
 2. Find the most expensive Track that has the MediaType "MPEG audio file".
 ```ruby
 # Enter your answer below
+Track.where(media_type_id:1).order("unit_price ASC").limit(1)
+
 
 ```
 
 3. Find the 2 oldest Artists.
 ```ruby
 # Enter your answer below
-
+Artist.order("created_at DESC").limit(2)
 ```
 
+4. Find all the Tracks that belong to the first Playlist.
 
-4. Find all the Tracks that belong to the 2 most recent Playlist.
+
+first_playlist = Playlist.order(created_at: :asc).first
+first_playlist.tracks
+
+5. Find all the Tracks that belong to the 2 most recent Playlist.
 ```ruby
 # Enter your answer below
 
-```
+playlists = Playlist.order(created_at: :asc).limit(2)
+tracklist = []
+
+
+playlists.each do |x|
+  tracklist = tracklist + x.tracks 
+end
+
+puts tracklist.size
 
